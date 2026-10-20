@@ -4,156 +4,120 @@
 
 ### Open-source AI spend visibility for engineering teams
 
-Track every LLM token, attribute costs to projects and features, and stop surprise AI bills — with a two-line SDK integration.
+Stop discovering your AI bill at the end of the month.<br/>
+Model Meter shows you which project, feature, or model is spending — before the invoice arrives.
 
-[![CI](https://github.com/jayanti-prajapati/model-meter/actions/workflows/ci.yml/badge.svg)](https://github.com/jayanti-prajapati/model-meter/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Yarn](https://img.shields.io/badge/Yarn-4.6%20Berry-2C8EBB?logo=yarn&logoColor=white)](https://yarnpkg.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
+[![Status](https://img.shields.io/badge/status-active%20development-orange)](#-roadmap)
 
-[Quick Start](#-quick-start-60-seconds) · [SDK Install](#-track-ai-spend-in-your-app) · [Architecture](#-architecture) · [Roadmap](#-roadmap) · [Contributing](#-contributing)
+**[Join the Waitlist](#-join-the-waitlist)** · [Roadmap](#-roadmap) · [Docs](#-documentation) · [Contributing](#-contributing)
 
 </div>
 
 ---
 
-## What is Model Meter?
-
-Engineering teams using multiple LLM providers face the same problem: costs are invisible until the invoice arrives, usage can't be attributed to a specific feature or team, and provider-reported bills don't match request-level estimates.
-
-**Model Meter gives you one place to see all of it.** Install the TypeScript SDK in your application, self-host the admin panel, and within minutes you'll have per-request cost attribution, spend trends, and a dashboard your finance team can actually read.
+> **Status:** Model Meter is in active development. Core infrastructure is built and working — we're shipping the auth, workspace UI, and hosted experience next. **Join the waitlist to be first in line.**
 
 ---
 
-## Who is Model Meter for?
+## The Problem
 
-| Role                    | How Model Meter helps                                                            |
-| ----------------------- | -------------------------------------------------------------------------------- |
-| **Engineering manager** | See which feature or project is driving AI cost, and by how much                 |
-| **Backend engineer**    | Two-line SDK integration; zero impact on existing AI call paths                  |
-| **Finance / FinOps**    | Compare estimated spend to provider invoices; get budget alerts before surprises |
-| **AI/ML engineer**      | Compare cost per request across models on equivalent workloads                   |
-| **Startup founder**     | Self-host for free; no per-seat or per-event SaaS fees                           |
+Engineering teams building with LLMs share the same pain:
 
-**Best fit:** B2B SaaS or AI-native teams with 5–50 engineers using multiple LLM providers who need to attribute AI costs to specific projects or features.
+- **Costs are invisible** until the invoice arrives at the end of the month
+- **No attribution** — you can't tell which feature, team, or model drove the spike
+- **Provider dashboards** don't break down by your projects or environments
+- **Finance asks questions** you can't answer without hours of manual log analysis
 
-**Not designed for:** Consumer ChatGPT usage tracking, enterprise SSO/compliance requirements, or teams that only use one model in one project with no attribution need.
+The average team discovers a costly AI bug **3–4 weeks after it ships**.
 
 ---
 
-## Features
+## What Model Meter Does
 
-| Feature                                                                       | Status         |
-| ----------------------------------------------------------------------------- | -------------- |
-| TypeScript SDK (`@model-meter/sdk`) — one `init()` call, all AI calls tracked | ✅ Available   |
-| Auto-tracking via OpenTelemetry `gen_ai.*` spans — zero code changes          | ✅ Available   |
-| Batch ingestion API with per-event validation and idempotency                 | ✅ Available   |
-| Decimal-precision cost engine with effective-dated pricing                    | ✅ Available   |
-| React dashboard — spend trends, provider/model/project breakdown              | ✅ Available   |
-| Self-hosted via Docker Compose — Postgres auto-migrates on start              | ✅ Available   |
-| Multi-workspace data model with tenant isolation                              | ✅ Available   |
-| Gateway event adapters (LiteLLM, Portkey, etc.)                               | 🔜 Milestone 2 |
-| Workspace budgets and threshold alerts                                        | 🔜 Milestone 4 |
-| Provider billing import and reconciliation                                    | 🔜 Milestone 5 |
-| Cost-to-quality evaluation across candidate models                            | 🔜 Milestone 6 |
+**One place to see all your AI spend — attributed, explainable, and under control.**
+
+|                           |                                                                                 |
+| ------------------------- | ------------------------------------------------------------------------------- |
+| **Track every request**   | Every LLM call, across every provider, captured automatically via OpenTelemetry |
+| **Attribute to projects** | Know exactly which feature, service, or team is spending what                   |
+| **Catch spikes early**    | Spend trends updated in near real-time — not end-of-month                       |
+| **Compare models**        | See cost vs. quality side-by-side before switching in production                |
+| **Reconcile invoices**    | Match your request-level estimates against actual provider bills                |
+| **Self-host free**        | Your data stays in your infrastructure. No per-seat or per-event fees.          |
 
 ---
 
-## Quick Start — 60 seconds
+## Join the Waitlist
 
-**Prerequisites:** Docker, Docker Compose.
+Model Meter is launching soon. Early access members get:
 
-```bash
-git clone https://github.com/jayanti-prajapati/model-meter
-cd model-meter
+- **First access** to the hosted dashboard (no self-hosting required)
+- **Direct input** on the roadmap — tell us what matters most to your team
+- **Early adopter pricing** when paid plans launch
 
-cp .env.example .env
-# Open .env and set INGESTION_KEY_SECRET to any random 32-char string:
-#   openssl rand -hex 32
+**[→ Join the waitlist](https://github.com/jayanti-prajapati/model-meter/issues/new?title=Waitlist%3A+Early+Access+Request&body=**Name%3A**%0A%0A**Team+size%3A**%0A%0A**LLM+providers+you+use%3A**%0A%0A**Biggest+AI+cost+pain+today%3A**%0A%0A**How+did+you+find+Model+Meter%3A**)** — takes 60 seconds, open an issue with your details.
 
-docker compose -f docker/docker-compose.yml up -d
-```
-
-| Service          | URL                          |
-| ---------------- | ---------------------------- |
-| Admin dashboard  | http://localhost:5173        |
-| API health check | http://localhost:3000/health |
-
-The API runs database migrations automatically on first start. No separate migration step needed.
-
-**Stop the stack:**
-
-```bash
-docker compose -f docker/docker-compose.yml down
-```
+Or just **[⭐ star the repo](https://github.com/jayanti-prajapati/model-meter)** — it helps us gauge interest and keeps you updated as we ship.
 
 ---
 
-## Track AI Spend in Your App
+## Who Is It For?
 
-### 1. Install
+| Role                    | Pain today                                                 | How Model Meter helps                                        |
+| ----------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
+| **Engineering manager** | "Which feature caused this month's AI cost spike?"         | Per-project cost breakdown, spend trends, anomaly visibility |
+| **Backend engineer**    | "I have no idea how much my AI calls cost"                 | Two-line SDK integration, zero impact on existing calls      |
+| **Finance / FinOps**    | "The OpenAI invoice doesn't match anything in our systems" | Estimated vs. provider-reported cost side-by-side            |
+| **AI/ML engineer**      | "Should I switch from GPT-4o to something cheaper?"        | Cost-per-request and quality comparison across models        |
+| **Startup founder**     | "We need visibility but can't afford another SaaS tool"    | 100% self-hostable, Apache 2.0, free forever                 |
 
-```bash
-npm install @model-meter/sdk
-# or
-yarn add @model-meter/sdk
-```
-
-### 2. Initialise once at app startup
-
-```ts
-// instrumentation.ts (or the top of your entry file)
-import { init } from "@model-meter/sdk";
-
-init({
-  apiKey: process.env.MODEL_METER_API_KEY, // from the admin panel
-  endpoint: process.env.MODEL_METER_ENDPOINT, // your Model Meter URL
-  projectId: "my-app",
-  environment: "production",
-});
-```
-
-### 3a. Auto-track via OpenTelemetry (recommended — zero other changes)
-
-```ts
-import { registerTelemetry } from "ai";
-import { OpenTelemetry } from "@ai-sdk/otel";
-import { createModelMeterExporter, getClient } from "@model-meter/sdk";
-import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
-import { SimpleSpanProcessor } from "@opentelemetry/sdk-trace-base";
-
-// Add Model Meter as an additional span processor alongside any existing OTel setup
-const provider = new NodeTracerProvider({
-  spanProcessors: [
-    new SimpleSpanProcessor(createModelMeterExporter(getClient()!)),
-  ],
-});
-provider.register();
-registerTelemetry(new OpenTelemetry());
-
-// Now every ai SDK call is automatically tracked — no further changes needed
-const result = await generateText({ model: openai("gpt-4o"), prompt: "..." });
-```
-
-### 3b. Wrapper functions (optional — adds operation-level labels)
-
-```ts
-import { generateText } from "@model-meter/sdk"; // drop-in for 'ai'
-
-const result = await generateText({
-  model: openai("gpt-4o"),
-  prompt: "Summarise this support ticket",
-  modelMeter: { operation: "summarise-ticket" }, // tagged in the dashboard
-});
-```
-
-> **Graceful failure:** SDK errors are caught internally and never surface to your application. If the Model Meter server is unreachable, your AI calls continue normally.
+**Best fit:** B2B SaaS and AI-native teams with 5–50 engineers using multiple LLM providers.
 
 ---
 
-## Architecture
+## What's Built
+
+The core is working. Here's where things stand:
+
+| Component                                                                 | Status          |
+| ------------------------------------------------------------------------- | --------------- |
+| TypeScript SDK (`@model-meter/sdk`) — `init()` once, all AI calls tracked | ✅ Built        |
+| Auto-tracking via OpenTelemetry `gen_ai.*` spans — zero code changes      | ✅ Built        |
+| Batch ingestion API with per-event validation and idempotency             | ✅ Built        |
+| Decimal-precision cost engine with effective-dated pricing                | ✅ Built        |
+| React dashboard — spend trends, provider/model/project breakdown          | ✅ Built        |
+| Self-hosted via Docker Compose — Postgres auto-migrates on start          | ✅ Built        |
+| Multi-workspace data model with tenant isolation                          | ✅ Built        |
+| Auth, workspace UI, key management — sign up and log in                   | 🔨 Building now |
+| Hosted cloud option (no self-hosting required)                            | 🔨 Building now |
+| Gateway adapters (LiteLLM, Portkey, etc.)                                 | 🔜 Next         |
+| Workspace budgets and threshold alerts                                    | 🔜 Coming       |
+| Provider billing import and reconciliation                                | 🔜 Coming       |
+| Cost-to-quality model evaluation                                          | 🔜 Coming       |
+
+---
+
+## Roadmap
+
+| Milestone                       | What ships                                           | Status         |
+| ------------------------------- | ---------------------------------------------------- | -------------- |
+| **M0 — Foundation**             | SDK, API, cost engine, admin dashboard, Docker       | ✅ Shipped     |
+| **M1 — Auth & Workspace UI**    | Sign up, log in, key management, workspace roles     | 🔨 In progress |
+| **M2 — Gateway Adapters**       | LiteLLM, Portkey, idempotency, ingestion health      | 🔜 Next        |
+| **M3 — Dashboard Polish**       | Effective-dated pricing, full aggregates, alerts     | 🔜 Planned     |
+| **M4 — Budgets & Alerts**       | Spend limits, threshold notifications, team invites  | 🔜 Planned     |
+| **M5 — Billing Reconciliation** | Provider invoice import, estimated vs. actual report | 🔜 Planned     |
+| **M6 — Cost-to-Quality**        | Model evaluation, cost-per-task comparison           | 🔜 Planned     |
+
+See [docs/ROADMAP.md](docs/ROADMAP.md) for full acceptance criteria.
+
+---
+
+## How It Works
 
 ```mermaid
 flowchart LR
@@ -161,221 +125,130 @@ flowchart LR
         A["@model-meter/sdk\n(init once)"]
     end
 
-    subgraph "Model Meter server"
-        B["apps/api\n(Express + Zod)"]
-        C["apps/worker\n(event processor)"]
-        D[("PostgreSQL\n+ migrations")]
-        E["apps/admin\n(React + Vite + MUI)"]
+    subgraph "Model Meter"
+        B["API\n(Express + Zod)"]
+        C["Cost Engine\n(decimal precision)"]
+        D[("PostgreSQL")]
+        E["Dashboard\n(React + Vite)"]
     end
 
-    A -- "POST /api/v1/usage-events/batch\n(Bearer ingestion key)" --> B
-    B -- "validate · authenticate\nrate-limit · enqueue" --> C
-    C -- "cost engine\nupsert · deduplicate\naggregate" --> D
-    D -- "analytics queries\nspend · breakdown\nprojects" --> E
+    A -- "events batch\n(Bearer key)" --> B
+    B -- "validate · auth\nrate-limit" --> C
+    C -- "cost calc\nupsert · dedupe\naggregate" --> D
+    D -- "spend · breakdown\nprojects · trends" --> E
 ```
 
-**Data flow:**
+**The key design decisions:**
 
-1. `init()` registers an OTel span exporter; `gen_ai.*` attributes are captured automatically after each AI SDK call.
-2. Events are buffered locally and flushed in batches every 5 seconds (or when the buffer reaches 50 events).
-3. The API validates each event against a versioned Zod schema, authenticates the ingestion key, and enqueues valid events.
-4. The worker resolves effective-dated pricing, calculates cost with decimal precision, and upserts the event with idempotency (`ON CONFLICT DO NOTHING`).
-5. Daily aggregates are updated atomically. The dashboard reads pre-aggregated data for fast queries.
+- **Not a proxy** — SDK instruments calls via OTel, your requests go directly to the provider
+- **Privacy by default** — prompts and completions are never collected
+- **Idempotent ingestion** — retries can't inflate usage or cost
+- **Effective-dated pricing** — price changes don't rewrite historical records
+- **Tenant isolation** — PostgreSQL RLS enforces workspace boundaries at the DB layer
 
 ---
 
-## Repository Structure
+## Try It Today (Self-Host)
 
-```text
-model-meter/
-├── apps/
-│   ├── api/                    # Express ingestion + analytics API
-│   ├── admin/                  # React / Vite / MUI dashboard
-│   └── worker/                 # Background event processor
-├── packages/
-│   ├── sdk-node/               # @model-meter/sdk — published npm package
-│   ├── contracts/              # Shared Zod schemas and TypeScript types
-│   ├── database/               # Knex client, migrations, repositories
-│   ├── cost-engine/            # Pure cost calculation (decimal.js)
-│   └── typescript-config/      # Shared tsconfig presets
-├── docker/
-│   └── docker-compose.yml      # Self-hosted stack
-├── docs/                       # Architecture, API, data model, security
-├── .env.example                # All environment variables documented
-├── .github/workflows/ci.yml    # Type check → test → build
-├── turbo.json                  # Turborepo task pipeline
-├── CONTRIBUTING.md
-├── CODE_OF_CONDUCT.md
-├── SECURITY.md
-└── LICENSE
+The self-hosted version works now. Auth UI is manual for the moment — full signup flow ships in M1.
+
+```bash
+git clone https://github.com/jayanti-prajapati/model-meter
+cd model-meter
+cp .env.example .env          # set INGESTION_KEY_SECRET
+docker compose -f docker/docker-compose.yml up -d
 ```
+
+Admin dashboard → http://localhost:5173 · API health → http://localhost:3000/health
+
+See [docs/GETTING-STARTED.md](docs/GETTING-STARTED.md) for the full setup guide including SDK integration and seeding your first ingestion key.
 
 ---
 
 ## Tech Stack
 
-| Layer                | Technology                                            |
-| -------------------- | ----------------------------------------------------- |
-| **SDK**              | TypeScript, OpenTelemetry API, Vercel AI SDK (peer)   |
-| **API**              | Node.js 22, Express 4, Zod, Knex                      |
-| **Worker**           | Node.js 22, decimal.js cost engine                    |
-| **Database**         | PostgreSQL 16, Knex migrations (auto-run on startup)  |
-| **Dashboard**        | React 18, Vite 6, MUI 6, TanStack Query 5, Recharts 2 |
-| **Monorepo**         | Yarn 4 Berry workspaces, Turborepo 2                  |
-| **Testing**          | Vitest 3                                              |
-| **CI**               | GitHub Actions                                        |
-| **Self-host**        | Docker Compose, multi-stage Dockerfiles               |
-| **Cloud (optional)** | AWS ECS Fargate, RDS PostgreSQL, SQS, CloudFront, S3  |
+| Layer         | Technology                                              |
+| ------------- | ------------------------------------------------------- |
+| **SDK**       | TypeScript, OpenTelemetry API, Vercel AI SDK (peer)     |
+| **API**       | Node.js 22, Express 4, Zod, Knex                        |
+| **Database**  | PostgreSQL 16, Knex migrations (auto-run on startup)    |
+| **Dashboard** | React 18, Vite 6, shadcn/ui, TanStack Query 5, Recharts |
+| **Monorepo**  | Yarn 4 Berry workspaces, Turborepo 2                    |
+| **Testing**   | Vitest 3                                                |
+| **CI**        | GitHub Actions                                          |
+| **Self-host** | Docker Compose, multi-stage Dockerfiles                 |
 
 ---
 
-## Roadmap
+## Who is Model Meter for? (Not for)
 
-| Milestone | Deliverable                                                        | Status     |
-| --------- | ------------------------------------------------------------------ | ---------- |
-| **M0**    | Monorepo scaffold — SDK, API, worker, admin, cost engine, Docker   | ✅ Shipped |
-| **M1**    | Auth, workspace roles, tenant isolation, RLS policies              | 🔜 Next    |
-| **M2**    | Gateway adapters, idempotency, dead-letter queue, ingestion health | 🔜 Planned |
-| **M3**    | Effective-dated pricing catalogue, full dashboard with aggregates  | 🔜 Planned |
-| **M4**    | Workspace/project budgets, threshold alerts, member invitations    | 🔜 Planned |
-| **M5**    | Provider billing import, reconciliation report, late adjustments   | 🔜 Planned |
-| **M6**    | Cost-to-quality evaluation, candidate model comparison             | 🔜 Planned |
+**Not designed for:**
 
-See [docs/ROADMAP.md](docs/ROADMAP.md) for acceptance criteria and validation targets.
+- Tracking personal ChatGPT subscription usage
+- Teams that need enterprise SSO or SOC 2 from day one
+- Replacing a full-featured LLM observability platform (LangSmith, Langfuse)
+- Universal LLM proxy with caching
 
----
-
-## Local Development
-
-**Prerequisites:** Node.js 22, Corepack / Yarn 4, Docker.
-
-```bash
-# 1. Install dependencies
-yarn install
-
-# 2. Start Postgres
-docker compose -f docker/docker-compose.yml up postgres -d
-
-# 3. Configure environment
-cp .env.example .env   # edit DATABASE_URL and INGESTION_KEY_SECRET
-
-# 4. Start API (auto-migrates on first run)
-yarn workspace @model-meter/api dev
-
-# 5. Start admin UI (separate terminal)
-yarn workspace @model-meter/admin dev
-
-# 6. Start worker (separate terminal)
-yarn workspace @model-meter/worker dev
-```
-
-**Common commands:**
-
-```bash
-yarn turbo run build        # build all packages
-yarn turbo run check-types  # typecheck all packages
-yarn turbo run test         # run all tests
-yarn workspace @model-meter/cost-engine test   # test a single package
-```
-
-See [AGENTS.md](AGENTS.md) for a full command reference.
-
----
-
-## Core Principles
-
-- **Privacy by default** — prompts and completions are never collected.
-- **Tenant isolation** — every query is workspace-scoped; PostgreSQL RLS is defence in depth.
-- **Transparent costs** — values are marked `estimated`, `provider_reported`, or `reconciled`. Never silently mixed.
-- **Idempotent ingestion** — retries cannot inflate usage or cost.
-- **Graceful telemetry** — SDK failures never affect the customer's AI request.
-- **Reproducible calculations** — pricing is versioned; each cost record stores the price version used.
-
----
-
-## Alternatives
-
-Looking for a different fit? See [docs/COMPARISON.md](docs/COMPARISON.md) for a detailed side-by-side comparison.
-
-| Tool                                     | Relationship to Model Meter                                                    |
-| ---------------------------------------- | ------------------------------------------------------------------------------ |
-| [Helicone](https://helicone.ai)          | Proxy-based LLM observability. Model Meter is non-proxy and stores no prompts. |
-| [LangSmith](https://smith.langchain.com) | Prompt debugging + eval platform. Complementary — use both.                    |
-| [Langfuse](https://langfuse.com)         | LLM tracing + evals. Open-source, different focus.                             |
-| [OpenMeter](https://openmeter.io)        | General-purpose API metering. Model Meter is AI-cost-specific.                 |
+If any of those is your primary need, see [docs/COMPARISON.md](docs/COMPARISON.md) for alternatives.
 
 ---
 
 ## Contributing
 
-Contributions are welcome. The best places to start:
+Model Meter is open-source and actively welcomes contributors. The best starting points:
 
-- **Good first issues** — browse [`good first issue`](https://github.com/jayanti-prajapati/model-meter/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) on the issue tracker.
-- **Provider pricing fixtures** — add or verify pricing records for LLM providers.
-- **Gateway adapters** — connect LiteLLM, Portkey, or other gateways to the ingestion API.
-- **Dashboard improvements** — React / MUI contributions to `apps/admin`.
-- **Documentation** — clarify architecture decisions, add provider-specific notes.
+- **[Good first issues](https://github.com/jayanti-prajapati/model-meter/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)** — curated approachable tasks
+- **Provider pricing fixtures** — add or verify pricing records for missing models
+- **Gateway adapters** — connect LiteLLM, Portkey, or other gateways
+- **Dashboard improvements** — React / shadcn/ui contributions to `apps/admin`
+- **Documentation** — provider-specific notes, integration examples
 
-Before large changes, open an issue first so scope and design can be agreed. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide including PR checklist, commit hygiene, and security requirements.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for dev setup, PR checklist, and conventions.
+
+---
+
+## Alternatives
+
+| Tool                                     | Relationship                                              |
+| ---------------------------------------- | --------------------------------------------------------- |
+| [Helicone](https://helicone.ai)          | Proxy-based. Model Meter is non-proxy, stores no prompts. |
+| [LangSmith](https://smith.langchain.com) | Prompt debugging + evals. Complementary — use both.       |
+| [Langfuse](https://langfuse.com)         | LLM tracing + evals. Open-source, different focus.        |
+| [OpenMeter](https://openmeter.io)        | General API metering. Model Meter is AI-cost-specific.    |
+
+Full comparison: [docs/COMPARISON.md](docs/COMPARISON.md)
 
 ---
 
 ## Documentation
 
-### Getting started
-
-| Document                                   | Description                                                             |
-| ------------------------------------------ | ----------------------------------------------------------------------- |
-| [Getting Started](docs/GETTING-STARTED.md) | Step-by-step: Docker quickstart, SDK setup, first event                 |
-| [FAQ](docs/FAQ.md)                         | Common questions: pricing, privacy, providers, architecture             |
-| [Use Cases](docs/USE-CASES.md)             | Real-world scenarios: cost attribution, budget alerts, model comparison |
-| [Integrations](docs/INTEGRATIONS.md)       | Provider compatibility, gateway adapters, SDK framework support         |
-| [Comparison](docs/COMPARISON.md)           | Model Meter vs Helicone, LangSmith, Langfuse, OpenMeter                 |
-| [Glossary](docs/GLOSSARY.md)               | Definitions for terms used across docs and code                         |
-
-### Technical reference
-
-| Document                                             | Description                                                             |
-| ---------------------------------------------------- | ----------------------------------------------------------------------- |
-| [Architecture](docs/ARCHITECTURE.md)                 | Component design, data flow, reliability and scaling decisions          |
-| [Ingestion flows](docs/INGESTION.md)                 | SDK, gateway, and billing import paths; deduplication strategy          |
-| [API design](docs/API.md)                            | Endpoints, authentication, request/response shapes                      |
-| [Data model](docs/DATA-MODEL.md)                     | PostgreSQL schema, cost provenance, aggregation design                  |
-| [Cost engine](docs/COST-ENGINE.md)                   | Pricing catalogue, calculation formula, cost-to-quality workflow        |
-| [Security](docs/SECURITY.md)                         | Tenant isolation, key management, threat model                          |
-| [Deployment](docs/DEPLOYMENT.md)                     | Docker Compose, AWS topology, CI/CD, monitoring                         |
-| [Roadmap](docs/ROADMAP.md)                           | Milestones, acceptance criteria, validation targets                     |
-| [Architecture decisions](docs/DECISIONS.md)          | ADR log — modular monolith, hybrid collection, PostgreSQL, privacy      |
-| [Product requirements](docs/PRODUCT-REQUIREMENTS.md) | Jobs to be done, user roles, functional and non-functional requirements |
-
-### Project
-
-| Document                                       | Description                                                      |
-| ---------------------------------------------- | ---------------------------------------------------------------- |
-| [Changelog](CHANGELOG.md)                      | Release history and version notes                                |
-| [Community Edition](docs/COMMUNITY-EDITION.md) | Free scope, license considerations, governance                   |
-| [Developer reference](AGENTS.md)               | Build commands, package map, SDK usage, migration guide          |
-| [Plans & decisions](docs/plans/README.md)      | Milestones, implementation ADRs, and research spikes (versioned) |
-
----
-
-## Acknowledgements
-
-- [Vercel AI SDK](https://github.com/vercel/ai) — OpenTelemetry `gen_ai.*` span conventions that the Model Meter SDK exporter builds on.
-- [OpenTelemetry](https://opentelemetry.io/) — semantic conventions for generative AI.
+|                                            |                                                   |
+| ------------------------------------------ | ------------------------------------------------- |
+| [Getting Started](docs/GETTING-STARTED.md) | Docker quickstart, SDK setup, first event         |
+| [FAQ](docs/FAQ.md)                         | Pricing, privacy, providers, architecture         |
+| [Use Cases](docs/USE-CASES.md)             | Cost attribution, budget alerts, model comparison |
+| [Integrations](docs/INTEGRATIONS.md)       | Provider compatibility, gateway adapters          |
+| [Comparison](docs/COMPARISON.md)           | vs Helicone, LangSmith, Langfuse, OpenMeter       |
+| [Glossary](docs/GLOSSARY.md)               | Term definitions                                  |
+| [Architecture](docs/ARCHITECTURE.md)       | Component design, data flow                       |
+| [API design](docs/API.md)                  | Endpoints, auth, request/response                 |
+| [Security](docs/SECURITY.md)               | Tenant isolation, key management                  |
+| [Roadmap](docs/ROADMAP.md)                 | Milestones and acceptance criteria                |
+| [Changelog](CHANGELOG.md)                  | Release history                                   |
 
 ---
 
 ## License
 
-Model Meter is licensed under the [Apache License 2.0](LICENSE). You are free to use, modify, and distribute it — commercially or non-commercially — with attribution. See [docs/COMMUNITY-EDITION.md](docs/COMMUNITY-EDITION.md) for community edition scope and governance.
+Apache 2.0 — free to use, modify, and distribute. See [LICENSE](LICENSE).
 
 ---
 
 <div align="center">
 
-Built with care for engineering teams who want to understand — and control — their AI spend.
+**Model Meter is being built in public.**<br/>
+Watch the repo, join the waitlist, or jump in and contribute.
 
-**[⭐ Star this repo](https://github.com/jayanti-prajapati/model-meter)** · **[🐛 Report a bug](https://github.com/jayanti-prajapati/model-meter/issues/new)** · **[💡 Request a feature](https://github.com/jayanti-prajapati/model-meter/issues/new)**
+**[⭐ Star to follow along](https://github.com/jayanti-prajapati/model-meter)** · **[📋 Join the waitlist](https://github.com/jayanti-prajapati/model-meter/issues/new?title=Waitlist%3A+Early+Access+Request&body=**Name%3A**%0A%0A**Team+size%3A**%0A%0A**LLM+providers+you+use%3A**%0A%0A**Biggest+AI+cost+pain+today%3A**)** · **[💬 Start a discussion](https://github.com/jayanti-prajapati/model-meter/discussions)**
 
 </div>
