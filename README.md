@@ -1,13 +1,13 @@
 <div align="center">
 
-# ⚡ Model Meter
+<img src="assets/logo.png" alt="Model Meter — Track · Compare · Optimize" width="480" />
 
 ### Open-source AI spend visibility for engineering teams
 
 Track every LLM token, attribute costs to projects and features, and stop surprise AI bills — with a two-line SDK integration.
 
 [![CI](https://github.com/jayanti-prajapati/model-meter/actions/workflows/ci.yml/badge.svg)](https://github.com/jayanti-prajapati/model-meter/actions/workflows/ci.yml)
-[![License](https://img.shields.io/badge/license-TBD-blue)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Yarn](https://img.shields.io/badge/Yarn-4.6%20Berry-2C8EBB?logo=yarn&logoColor=white)](https://yarnpkg.com/)
@@ -24,6 +24,22 @@ Track every LLM token, attribute costs to projects and features, and stop surpri
 Engineering teams using multiple LLM providers face the same problem: costs are invisible until the invoice arrives, usage can't be attributed to a specific feature or team, and provider-reported bills don't match request-level estimates.
 
 **Model Meter gives you one place to see all of it.** Install the TypeScript SDK in your application, self-host the admin panel, and within minutes you'll have per-request cost attribution, spend trends, and a dashboard your finance team can actually read.
+
+---
+
+## Who is Model Meter for?
+
+| Role                    | How Model Meter helps                                                            |
+| ----------------------- | -------------------------------------------------------------------------------- |
+| **Engineering manager** | See which feature or project is driving AI cost, and by how much                 |
+| **Backend engineer**    | Two-line SDK integration; zero impact on existing AI call paths                  |
+| **Finance / FinOps**    | Compare estimated spend to provider invoices; get budget alerts before surprises |
+| **AI/ML engineer**      | Compare cost per request across models on equivalent workloads                   |
+| **Startup founder**     | Self-host for free; no per-seat or per-event SaaS fees                           |
+
+**Best fit:** B2B SaaS or AI-native teams with 5–50 engineers using multiple LLM providers who need to attribute AI costs to specific projects or features.
+
+**Not designed for:** Consumer ChatGPT usage tracking, enterprise SSO/compliance requirements, or teams that only use one model in one project with no attribution need.
 
 ---
 
@@ -277,6 +293,19 @@ See [AGENTS.md](AGENTS.md) for a full command reference.
 
 ---
 
+## Alternatives
+
+Looking for a different fit? See [docs/COMPARISON.md](docs/COMPARISON.md) for a detailed side-by-side comparison.
+
+| Tool                                     | Relationship to Model Meter                                                    |
+| ---------------------------------------- | ------------------------------------------------------------------------------ |
+| [Helicone](https://helicone.ai)          | Proxy-based LLM observability. Model Meter is non-proxy and stores no prompts. |
+| [LangSmith](https://smith.langchain.com) | Prompt debugging + eval platform. Complementary — use both.                    |
+| [Langfuse](https://langfuse.com)         | LLM tracing + evals. Open-source, different focus.                             |
+| [OpenMeter](https://openmeter.io)        | General-purpose API metering. Model Meter is AI-cost-specific.                 |
+
+---
+
 ## Contributing
 
 Contributions are welcome. The best places to start:
@@ -293,21 +322,40 @@ Before large changes, open an issue first so scope and design can be agreed. See
 
 ## Documentation
 
+### Getting started
+
+| Document                                   | Description                                                             |
+| ------------------------------------------ | ----------------------------------------------------------------------- |
+| [Getting Started](docs/GETTING-STARTED.md) | Step-by-step: Docker quickstart, SDK setup, first event                 |
+| [FAQ](docs/FAQ.md)                         | Common questions: pricing, privacy, providers, architecture             |
+| [Use Cases](docs/USE-CASES.md)             | Real-world scenarios: cost attribution, budget alerts, model comparison |
+| [Integrations](docs/INTEGRATIONS.md)       | Provider compatibility, gateway adapters, SDK framework support         |
+| [Comparison](docs/COMPARISON.md)           | Model Meter vs Helicone, LangSmith, Langfuse, OpenMeter                 |
+| [Glossary](docs/GLOSSARY.md)               | Definitions for terms used across docs and code                         |
+
+### Technical reference
+
 | Document                                             | Description                                                             |
 | ---------------------------------------------------- | ----------------------------------------------------------------------- |
-| [Product requirements](docs/PRODUCT-REQUIREMENTS.md) | Jobs to be done, user roles, functional and non-functional requirements |
 | [Architecture](docs/ARCHITECTURE.md)                 | Component design, data flow, reliability and scaling decisions          |
 | [Ingestion flows](docs/INGESTION.md)                 | SDK, gateway, and billing import paths; deduplication strategy          |
 | [API design](docs/API.md)                            | Endpoints, authentication, request/response shapes                      |
 | [Data model](docs/DATA-MODEL.md)                     | PostgreSQL schema, cost provenance, aggregation design                  |
 | [Cost engine](docs/COST-ENGINE.md)                   | Pricing catalogue, calculation formula, cost-to-quality workflow        |
 | [Security](docs/SECURITY.md)                         | Tenant isolation, key management, threat model                          |
-| [Community Edition](docs/COMMUNITY-EDITION.md)       | Free scope, license considerations, governance                          |
 | [Deployment](docs/DEPLOYMENT.md)                     | Docker Compose, AWS topology, CI/CD, monitoring                         |
 | [Roadmap](docs/ROADMAP.md)                           | Milestones, acceptance criteria, validation targets                     |
 | [Architecture decisions](docs/DECISIONS.md)          | ADR log — modular monolith, hybrid collection, PostgreSQL, privacy      |
-| [Developer reference](AGENTS.md)                     | Build commands, package map, SDK usage, migration guide                 |
-| [Plans & decisions](docs/plans/README.md)            | Milestones, implementation ADRs, and research spikes (versioned)        |
+| [Product requirements](docs/PRODUCT-REQUIREMENTS.md) | Jobs to be done, user roles, functional and non-functional requirements |
+
+### Project
+
+| Document                                       | Description                                                      |
+| ---------------------------------------------- | ---------------------------------------------------------------- |
+| [Changelog](CHANGELOG.md)                      | Release history and version notes                                |
+| [Community Edition](docs/COMMUNITY-EDITION.md) | Free scope, license considerations, governance                   |
+| [Developer reference](AGENTS.md)               | Build commands, package map, SDK usage, migration guide          |
+| [Plans & decisions](docs/plans/README.md)      | Milestones, implementation ADRs, and research spikes (versioned) |
 
 ---
 
@@ -320,7 +368,7 @@ Before large changes, open an issue first so scope and design can be agreed. See
 
 ## License
 
-License not yet finalised. See [LICENSE](LICENSE) and [docs/COMMUNITY-EDITION.md](docs/COMMUNITY-EDITION.md). The intention is a free, self-hostable community edition.
+Model Meter is licensed under the [Apache License 2.0](LICENSE). You are free to use, modify, and distribute it — commercially or non-commercially — with attribution. See [docs/COMMUNITY-EDITION.md](docs/COMMUNITY-EDITION.md) for community edition scope and governance.
 
 ---
 

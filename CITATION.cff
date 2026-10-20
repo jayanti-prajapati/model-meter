@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use Model Meter in your research or reference it in published work, please cite it using this metadata."
+type: software
+title: "Model Meter"
+abstract: "Open-source AI spend visibility and cost-to-quality optimization for engineering teams. Track every LLM token, attribute costs to projects and features, and stop surprise AI bills — with a two-line SDK integration."
+authors:
+  - family-names: Prajapat
+    given-names: Jayantilal
+    alias: jayanti-prajapati
+    orcid: ""
+repository-code: "https://github.com/jayanti-prajapati/model-meter"
+url: "https://github.com/jayanti-prajapati/model-meter"
+license: Apache-2.0
+version: "0.1.0"
+date-released: "2026-10-16"
+keywords:
+  - LLM
+  - AI cost tracking
+  - AI spend visibility
+  - OpenTelemetry
+  - cost optimization
+  - developer tools
+  - open source
+  - TypeScript
+  - self-hosted
+  - AI observability

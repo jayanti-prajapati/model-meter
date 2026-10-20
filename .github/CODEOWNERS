@@ -1,0 +1,11 @@
+# CODEOWNERS — default reviewers for all changes
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owner — reviews required on all PRs
+* @jayanti-prajapati
+
+# Package-level ownership (add team members here as the project grows)
+# packages/cost-engine/ @jayanti-prajapati
+# packages/sdk-node/    @jayanti-prajapati
+# apps/admin/           @jayanti-prajapati
+# apps/api/             @jayanti-prajapati
