@@ -1,6 +1,8 @@
 <div align="center">
 
 <img src="assets/logo.png" alt="Model Meter — Track · Compare · Optimize" width="480" />
+<img alt="Model Meter — Track · Compare · Optimize" width="480" alt="logo-light" src="https://github.com/user-attachments/assets/68d22cb5-add5-44f7-a351-9b206672f4ad" />
+
 
 ### Open-source AI spend visibility for engineering teams
 
